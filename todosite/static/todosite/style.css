@@ -1,0 +1,30 @@
+section {
+    margin: 15px 15px 0px 15px;
+}
+textarea {
+    resize: none;
+}
+
+.form-align {
+    float: left;
+    margin: 3px 3px 3px 0px; 
+}
+.row-padded {
+    padding: 6px 0px 6px 0px;
+    margin: 6px 0px 6px 0px;
+}
+.row-no-padding {
+    margin: 6px 0px 6px 0px;
+}
+.row-year {
+    background-color: #d1d2c2;
+}
+.row-month {
+    background-color: #747474;
+}
+.row-day {
+    background-color: #dfeef3;
+}
+.col-task {
+    background-color: #d6d6d6;
+}

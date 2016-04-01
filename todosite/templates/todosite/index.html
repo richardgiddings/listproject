@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block header %}
+<h1 class="text-center">My Planner</h1><hr/>
+<h2>Welcome <small>{{full_name}}</small></h2>
+{% endblock %}
+
+{% block navigation %}
+<div class="row">
+    <div class="col-xs-12">
+        <form action="{% url 'todosite:add_task' %}" method="get" class="form-align">
+            <input type="submit" value="Add a task" class="btn btn-default btn-sm"/>
+        </form>
+        <form action="{% url 'todosite:logout' %}" method="get" class="form-align">
+            <input type="submit" value="logout" class="btn btn-warning btn-sm"/>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+	{% if task_list %}
+        {% regroup task_list by task_due|date:"Y" as tasks_by_year %}
+        {% for task_years in tasks_by_year %}
+            <div class="row row-padded row-year">
+                <div class="col-xs-12">{{ task_years.grouper }}</div>
+            </div>
+            {% regroup task_years.list by task_due|date:"F" as tasks_by_month %}
+            {% for task_months in tasks_by_month %}
+                <div class="row row-padded row-month">
+                    <div class="col-xs-12">{{ task_months.grouper }}</div>
+                </div>
+                {% regroup task_months.list by task_due|date:"dS" as tasks_by_day %}
+                {% for task_days in tasks_by_day %}
+                    <div class="row row-padded row-day">
+                        <div class="col-xs-12">{{ task_days.grouper }}</div>
+                    </div>
+                    {% for task in task_days.list %}
+                    <div class="row row-no-padding">
+                        <div class="col-xs-3">{{ task.task_due|date:"H:i" }}</div>
+                    	<div class="col-xs-9 col-task" id="task_title-{{ task.id }}">{{ task.task_title }}</div>
+                    </div>
+                    <div class="row row-padded" id="description-{{ task.id }}" style="display:none">
+                        <div class="col-xs-9 col-xs-offset-3">
+                            {{ task.task_description }}
+                        </div>
+                    </div>
+                    <div class="row" id="buttons-{{ task.id }}" style="display:none">
+                        <div class="col-xs-9 col-xs-offset-3">
+                            <form action="{% url 'todosite:edit_task' task.id %}" method="get" class="form-align">
+                                <input type="submit" value="Edit" class="btn btn-default btn-sm"/>
+                            </form>
+                            <form action="{% url 'todosite:delete_task' task.id %}" method="get" class="form-align">
+                                <input type="submit" value="Delete" class="btn btn-warning btn-sm"/>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
+        {% endfor %}
+    {% else %}
+        <div class="row">
+            <div class="col-xs-12">There are no tasks to display.</div>
+        </div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row text-center">
+    <h3>You are now logged out.</h3>
+    <p>Click <a href="{% url 'todosite:login' %}">here</a> to log back in.</p>
+</div>
+{% endblock %}

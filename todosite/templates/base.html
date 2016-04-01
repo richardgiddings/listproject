@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}My Planner{% endblock %}</title>
+    <link rel="stylesheet" href="/static/todosite/style.css" type="text/css" media="screen" />
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+ 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {{ form.media }}
+
+    <script>
+    $(document).ready(function() {
+        $('[id^="task_title"]').click(function() {
+            var id = $(this).attr('id').split('-')[1];
+            $("#description-"+id).toggle();
+            $("#buttons-"+id).toggle();
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <div id="page" class="container">
+		<header>
+			{% block header %}<h1 class="text-center">My Planner</h1><hr/>{% endblock %}
+			<nav>{% block navigation %}{% endblock %}</nav>
+		</header>
+		<section>
+	    	{% block content %}{% endblock %}
+		</section>
+		<footer>
+            {% block footer %}
+            <hr/>
+            <p class="text-center">Copyright <span class="glyphicon glyphicon-copyright-mark"></span> 2016</p>
+            {% endblock %}
+        </footer>
+	</div>
+</body>
+</html>
