@@ -10,10 +10,10 @@ class Task(models.Model):
     """
  
     task_title = models.CharField(max_length=20,
-                                  help_text="The title of the task.")
+                                  help_text="Maximum of 20 characters.")
 
     task_description = models.TextField(max_length=300,
-                       help_text="Enter a description for the task.")
+                       help_text="Maximum of 300 characters.")
 
     task_due = models.DateTimeField('Date due', 
                                     default=timezone.now)
