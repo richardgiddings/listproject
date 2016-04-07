@@ -5,7 +5,7 @@
 <div class="form-group">
 	<div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
 		<input type="text" class="form-control" name="username" value="" id="username" placeholder="Username" aria-describedby="helpBlockUsename" autocapitalize="none">
-		<span id="helpBlockUsename" class="help-block">Enter your username.</span>
+		<span id="helpBlockUsename" class="help-block">Enter your email username.</span>
         <input type="password" class="form-control" name="password" value="" id="password" placeholder="Password" aria-describedby="helpBlockPassword">
         <span id="helpBlockPassword" class="help-block">Enter your password.</span>
     </div>
@@ -16,4 +16,16 @@
 	</div>
 </div>
 </form>
+<p class="text-center">Not registered yet? Click <a href="{% url 'todosite:register' %}">here</a> to register.</p>
+{% if messages %}
+    <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
+            {% for message in messages %}
+                    <div class="alert alert-success" role="alert">                            
+                        {{ message }}
+                    </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
 {% endblock %}
