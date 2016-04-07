@@ -12,36 +12,59 @@ class TaskForm(forms.ModelForm):
         model = Task
         fields = ['task_title', 'task_description', 'task_due']
         widgets={
-        'task_description': forms.Textarea(attrs={'cols': 30, 'rows': 10}),
+        'task_title':
+        forms.TextInput(attrs = {'placeholder': 'Give the task a name here.'}),
+        'task_description':
+        forms.Textarea(attrs={'placeholder': 'Describe the task here.'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(TaskForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
 
 class UserRegistrationForm(UserCreationForm):
     """
     A form for creating a user
     """
-    password1 = forms.CharField(label= 'Please enter a password', widget = forms.PasswordInput)
-    password2 = forms.CharField(label= 'Please confirm password', widget = forms.PasswordInput)
+    password1 = forms.CharField(label= 'Please enter a password', 
+        widget = forms.PasswordInput(
+                attrs = {'placeholder': 'Choose a password.'}))
+    password2 = forms.CharField(label= 'Please confirm password', 
+        widget = forms.PasswordInput(
+                attrs = {'placeholder': 'Confirm your password.'}))
     timezone = forms.ChoiceField(
-        label='Time Zone',
+        label='Time zone',
         choices=[(t, t) for t in pytz.common_timezones]
     )
 
     class Meta:
         model = UserProfile
-        fields = ['email', 'timezone', 'known_as',]
+        fields = ['email', 'known_as', 'timezone',]
+        widgets={
+        'email':
+        forms.EmailInput(attrs = {'placeholder': 'Your email address.'}),
+        'known_as':
+        forms.TextInput(attrs = {'placeholder': 'How you want to be greeted.'}),
+        }
 
-        def clean_password(self):
-            password1 = self.cleaned_data['password1']
-            password2 = self.cleaned_data['password2']
-            if password1 and password2 and password1 != password2:
-                raise forms.ValidationError('Passwords do no not match.')
-            return password2
+    def clean_password(self):
+        password1 = self.cleaned_data['password1']
+        password2 = self.cleaned_data['password2']
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError('Passwords do no not match.')
+        return password2
 
-        def save(self, commit = True):
-            user = super(UserRegistrationForm, self).save(commit = False)
-            user.set_password(self.cleaned_data['password1'])
-            user.save()
-            return user
+    def save(self, commit = True):
+        user = super(UserRegistrationForm, self).save(commit = False)
+        user.set_password(self.cleaned_data['password1'])
+        user.save()
+        return user
+
+    def __init__(self, *args, **kwargs):
+        super(UserRegistrationForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
 
 class UserChangeForm(forms.ModelForm):
     """
@@ -55,7 +78,12 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ['email', 'timezone', 'known_as',]
+        fields = ['email', 'known_as', 'timezone',]
 
     def clean_password(self):
         self.initial['password']
+
+    def __init__(self, *args, **kwargs):
+        super(UserChangeForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'

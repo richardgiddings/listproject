@@ -122,6 +122,6 @@ class RegistrationView(SuccessMessageMixin, CreateView):
     """
     form_class = UserRegistrationForm
     template_name = 'todosite/registration.html'
-    success_url = reverse_lazy('todosite:login')
-    success_message = 'User created successfully.'
+    success_url = reverse_lazy('todosite:register')
+    success_message = 'User created.'
 

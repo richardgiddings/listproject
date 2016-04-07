@@ -1,35 +1,42 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="panel panel-primary row">
-    <div class="panel-heading">Registration</div>
-    <div class="panel-body">
-        <form method="post" class="form-horizontal">{% csrf_token %}
-            {% for field in form %}
-            <div class="form-group">
-                <div class="col-xs-12">
-                    <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
-                    <p class="form-control-static">{{field}}</p>
-                    <p class="help-block">{{field.help_text}}</p>
-                    {% if field.errors %}
-                        {% for error in field.errors %}
-                            <div class="alert alert-danger" role="alert">
-                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                <span class="sr-only">Error:</span>
-                                {{ error|escape }}
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                </div>
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Registration page</div>
+            <div class="panel-body">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-success" role="alert">                            
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <form method="post">{% csrf_token %}
+                    {% for field in form %}
+                    <div class="form-group">
+                        <label class="control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                        <p>{{field}}</p>
+                        <p class="help-block">{{field.help_text}}</p>
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <span class="sr-only">Error:</span>
+                                    {{ error|escape }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <div class="form-group">
+                         <input type="submit" class="btn btn-primary btn-block" value="REGISTER"/>
+                    </div>
+                </form>
+                <p class="text-center">Click <a href="{% url 'todosite:login' %}">here</a> to return to the login page.</p>
             </div>
-            {% endfor %}
-            <div class="form-group">
-                <div class="col-xs-12">
-                    <input type="submit" class="btn btn-default btn-sm" value="Save"/>
-                    <input type="submit" class="btn btn-default btn-sm" name="cancel" value="Cancel"/>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 {% endblock %}

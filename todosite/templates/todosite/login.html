@@ -17,15 +17,4 @@
 </div>
 </form>
 <p class="text-center">Not registered yet? Click <a href="{% url 'todosite:register' %}">here</a> to register.</p>
-{% if messages %}
-    <div class="row">
-        <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
-            {% for message in messages %}
-                    <div class="alert alert-success" role="alert">                            
-                        {{ message }}
-                    </div>
-            {% endfor %}
-        </div>
-    </div>
-{% endif %}
 {% endblock %}
