@@ -31,7 +31,7 @@
                 <div class="row row-padded row-month">
                     <div class="col-xs-12">{{ task_months.grouper }}</div>
                 </div>
-                {% regroup task_months.list by task_due|date:"dS" as tasks_by_day %}
+                {% regroup task_months.list by task_due|date:"jS" as tasks_by_day %}
                 {% for task_days in tasks_by_day %}
                     <div class="row row-padded row-day">
                         <div class="col-xs-12">{{ task_days.grouper }}</div>
