@@ -11,8 +11,6 @@ class CustomUserManager(BaseUserManager):
 
         user = self.model(
                           email = self.normalize_email(email),
-                          timezone = timezone,
-                          known_as = known_as,
                           is_staff=is_staff, 
                           is_active=True,
                           is_superuser=is_superuser,
