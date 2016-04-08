@@ -3,6 +3,7 @@ from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField, UserCreationForm
 from .models import Task, UserProfile
 import pytz
+from bootstrap3_datetime.widgets import DateTimePicker
 
 class TaskForm(forms.ModelForm):
     """
@@ -16,6 +17,8 @@ class TaskForm(forms.ModelForm):
         forms.TextInput(attrs = {'placeholder': 'Give the task a name here.'}),
         'task_description':
         forms.Textarea(attrs={'placeholder': 'Describe the task here.'}),
+        'task_due':
+        DateTimePicker(options={"format": "YYYY-MM-DD HH:mm"})
         }
 
     def __init__(self, *args, **kwargs):
@@ -30,9 +33,9 @@ class UserRegistrationForm(UserCreationForm):
     password1 = forms.CharField(label= 'Please enter a password', 
         widget = forms.PasswordInput(
                 attrs = {'placeholder': 'Choose a password.'}))
-    password2 = forms.CharField(label= 'Please confirm password', 
+    password2 = forms.CharField(label= 'Please confirm your password', 
         widget = forms.PasswordInput(
-                attrs = {'placeholder': 'Confirm your password.'}))
+                attrs = {'placeholder': 'Enter your password again.'}))
     timezone = forms.ChoiceField(
         label='Time zone',
         choices=[(t, t) for t in pytz.common_timezones]

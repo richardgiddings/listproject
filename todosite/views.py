@@ -14,6 +14,8 @@ from django.views.generic.edit import DeleteView
 from django.views.generic import CreateView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
+from django.utils import timezone
+import pytz
 
 def login(request):
     """
@@ -35,6 +37,7 @@ def auth_view(request):
 
     if user is not None:
         auth.login(request, user)
+        request.session['django_timezone'] = request.user.timezone
         return HttpResponseRedirect(reverse('todosite:loggedin'))
     else:
    	    return HttpResponseRedirect(reverse('todosite:invalid'))
@@ -53,8 +56,6 @@ def loggedin(request):
     """
     The main page seen when logged in
     """
-    request.session['django_timezone'] = request.user.timezone
-
     task_list = Task.objects.order_by('task_due')
     task_list = task_list.filter(belongs_to=request.user)
 
