@@ -11,4 +11,6 @@ Currently requires:
 
 - A (Postgres) database to store the users, and tasks. Note that login uses an email address rather than a username.
 
-The application
+The application can be seen at:
+
+http://sub1.giddingsr.webfactional.com/todosite/login/
