@@ -2,6 +2,8 @@
 
 An application to enable a user to register, login and create a list of items to do on a specific day along with the time the task is due. Styling is done using Bootstrap.
 
+![Alt text](site.png?raw=true "site")
+
 Currently requires:
 
 - pytz
